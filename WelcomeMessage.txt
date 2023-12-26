@@ -1,0 +1,4 @@
+Welcome to SimPYlGravSim. 
+A simple command line program used to simulate the movement of point particles,
+celestial bodies and electromagnetic fields all in one!
+Type help or ? to list commands.
