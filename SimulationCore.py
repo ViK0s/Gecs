@@ -25,7 +25,7 @@ class circle:
 
 
 class massObject(circle):
-    def __init__(self,xc,yc, r, color, mass = 0, q = 0, v = [0,0]):
+    def __init__(self,xc,yc, r, color, mass = 0, q = 0, v = list([0,0])):
         self.r=r
         self.xc=xc
         self.yc=yc
@@ -35,7 +35,7 @@ class massObject(circle):
         self.q = q
         
         circle.__init__(self,xc,yc,self.r,color)
-    def SimulateGravity(self, obj, dt):
+    def SimulateGravity(self, obj):
         templst = [self.xc, self.yc]
         templst2 = [obj.xc, obj.yc]
         vctr = np.array(templst)

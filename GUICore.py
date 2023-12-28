@@ -23,9 +23,10 @@ class Gui(cmd.Cmd):
 
     def do_run(self, line):
         """run the sim"""
-        
         print("Running sim, close the window, or type ")
-        subprocess.run(["python", "GravitySimulation.py"])
+        result = subprocess.run(["python", "GravitySimulation.py", "680 320 100 200", "blue red", "20000000000000 1000000000000", "0 0 1 -1"], capture_output=True, text=True)
+        print(result.stdout)
+        print(result.stderr)
         print("Closing simulation")
 
 if __name__ == '__main__':
