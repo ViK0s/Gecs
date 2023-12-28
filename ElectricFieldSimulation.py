@@ -1,34 +1,44 @@
 import SimulationCore as SimC
 import pygame
+import sys
 
-
+input = sys.argv
 
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 running = True
-objekt = SimC.massObject(680, 320, 5, "blue", q = 20)
-objekt2 = SimC.massObject(100, 200, 5, "red", q = 1)
-objektcheck = SimC.massObject(500, 500, 5, "black", q = 1)
+#better var name needed, this object is supposed to be the "test charge"
+test_charge = SimC.massObject(500, 500, 5, "black", q = 1)
+def drawgroup(objlist):
+    for i in objlist:
+        i.draw(screen)
 
-objlist = [objekt, objekt2]
+def ChangeColor(objlist):
+    for i in objlist:
+        x = x
 
+#this is kinda unreadable?
+#print(SimC.SplitStringIntoList(input[1]))
+
+x = SimC.ObjSpawn(SimC.afterConvert(SimC.SplitStringIntoList(input[1])), int(input[6]), 0, 0, SimC.SplitStringIntoList(input[5]), 0)
+
+print(SimC.SplitStringIntoList(input[5]))
 while running:
     screen.fill("white")
-    objekt.draw(screen)
-    objekt2.draw(screen)
-    objektcheck.draw(screen)
+    test_charge.draw(screen)
+    drawgroup(x)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
-    essa = objektcheck.SimElectricField(objlist)
-    objektcheck.DrawVector("E", 0.000001, screen)
+    
+    test_charge.SimElectricField(x)
+    test_charge.DrawVector("E", 0.000001, screen)
     #object position debugging
-    font = pygame.font.Font(None, 64)
+    """font = pygame.font.Font(None, 64)
     text = font.render("x:" + str(int(objekt.xc)) + " y: "+ str(int(objekt.yc)) + " Ex: " + str(round(objektcheck.E[0], 2)) + " Ey: "+ str(round(objektcheck.E[1], 2)), True, (10, 10, 10))
     textpos = text.get_rect(centerx=640, y=10)
     screen.blit(text, textpos)
-    #end of debugging
+    #end of debugging"""
     pygame.display.flip()
 pygame.quit()

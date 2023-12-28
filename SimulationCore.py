@@ -35,6 +35,7 @@ class massObject(circle):
         self.q = q
         
         circle.__init__(self,xc,yc,self.r,color)
+    #Change the input, to be an obj list, not a single obj!
     def SimulateGravity(self, obj):
         templst = [self.xc, self.yc]
         templst2 = [obj.xc, obj.yc]
@@ -62,11 +63,11 @@ class massObject(circle):
         elif vector == "a":
             vector = self.a 
         elif vector == "E":
-            if self.q != None:
+            #if self.q != None:
                 vector = self.E
-            else:
-                print("bad args")
-                return
+            #else:
+            #    print("bad args")
+            #    return
         
         scaledVector = vector * scale
         #Choose the ending position of vector
@@ -89,7 +90,60 @@ class massObject(circle):
             self.E += etemp
         self.E *= k
 
-    
+
+#position : list of list
+#amount : int
+#mass : list
+#speed : list of list
+#color : list
+#q : list
+
+def ObjSpawn(position:list, amount:int, mass, color, q, speed):
+    objlist = []
+    for i in range(amount):
+        #temp var, change name please
+        xc = int(position[i][0])
+        yc = int(position[i][1])
+        if mass == 0:
+            mass = [0] * amount
+        if color == 0:
+            color = ["black"] * amount
+        if q == 0:
+            q = [0] * amount
+        if speed == 0:
+            speed = [[0, 0]] * amount
+        objlist.append(massObject(xc, yc, 5, color[i], int(mass[i]),int(q[i]), ConvertListTypeToInt(speed[i])) )
+    return objlist
+def ObjSim(objlist, window, check):
+    for i in objlist:
+        i.draw(window)
+        i.DrawVector("v", 100, window)
         
+        if check == "g":
+            for n in range(len(objlist)):
+                if objlist[n] != i:
+                    i.SimulateGravity(objlist[n])
+        #elif check == "e":
+        #    i.SimElectricField(objlist)
+#this function splits the string fed into it and makes a list.
+def SplitStringIntoList(string):
+    li = list(string.split(" "))
+    return li
+#rename, makes a list of lists from a list
+def afterConvert(list):
+    pa = []
+    templist = []
+    for n in list:
+        templist = list[:2]
+        list.pop(0)
+        list.pop(0)
+        pa.append(templist) 
+    return pa
+#Converts args inside list into int
+def ConvertListTypeToInt(list):
+    templist = []
+    for i in range(len(list)):
+        templist.append(int(list[i]))
+    return templist    
 
 
