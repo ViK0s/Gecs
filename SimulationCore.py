@@ -125,6 +125,7 @@ def ObjSim(objlist, window, check):
                     i.SimulateGravity(objlist[n])
         #elif check == "e":
         #    i.SimElectricField(objlist)
+#functions below this could really use their own module
 #this function splits the string fed into it and makes a list.
 def SplitStringIntoList(string):
     li = list(string.split(" "))

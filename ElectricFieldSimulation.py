@@ -16,13 +16,16 @@ def drawgroup(objlist):
 
 def ChangeColor(objlist):
     for i in objlist:
-        x = x
+        if i.q > 0:
+            i.color = "red"
+        else:
+            i.color = "blue"
 
 #this is kinda unreadable?
 #print(SimC.SplitStringIntoList(input[1]))
 
 x = SimC.ObjSpawn(SimC.afterConvert(SimC.SplitStringIntoList(input[1])), int(input[6]), 0, 0, SimC.SplitStringIntoList(input[5]), 0)
-
+ChangeColor(x)
 print(SimC.SplitStringIntoList(input[5]))
 while running:
     screen.fill("white")

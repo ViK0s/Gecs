@@ -10,6 +10,10 @@ import subprocess
             print("no args passed, or bad args")
         elif line[0] == '-':
             for i in line:"""
+#this function is copied from SimulationCore.py mostly because InterfaceCore shouldn't use that module, this function should have it's own module
+def SplitStringIntoList(string):
+    li = list(string.split(" "))
+    return li
 
 
 welcomeMessage = open("WelcomeMessage.txt", "r")
@@ -56,7 +60,10 @@ class Gui(cmd.Cmd):
         """run the sim"""
         posarg = ""
         qarg = ""
+        
+        #handle interactive mode
         if line == '--interactive' or line == "-i":
+            
             print("Running interactive mode")
             print("pass the amount of bodies you want in the sim")
             amount = input()
@@ -73,17 +80,100 @@ class Gui(cmd.Cmd):
                 posarg += x + " " + y + " "
                 
                 qarg += q + " "
-        else:
+
+            print("Running sim, close the window, or type ")
+            result = subprocess.run(["python", "ElectricFieldSimulation.py", posarg, "", "", "", qarg, str(amount)], capture_output=True, text=True)
+            print(result.stdout)
+            print(result.stderr)
+        
+        #non interactive mode
+        elif line[:11] == "--arguments": 
+            passedargs = line[13:]
+            tempstring = ""
+            listofargs = []
+            # check if starting and ending chars were passed correctly, it couldn't be done before, because the code that handles
+            # making user input correct for the program, needs to have those
+            if passedargs[:2] != "[[" and passedargs[-2:] != "]]":
+                print("print help EfSim here")
+                return
+            
+            # making input correct for program
+            for i in passedargs:
+                if i == "[":
+                    continue
+                elif i != "]":
+                    if i == ',':
+                        i = ""
+                        #continue
+                    tempstring += i
+                    
+                elif i == "]":
+                    listofargs.append(tempstring)
+                    tempstring = ''
+            
+            #this is really stupid, but I couldn't bother to rewire this code, what it does is that while passing the args like so [[args],[args]] a third string with nothing
+            #inside is created, so we just pop it so that there's no bugs. This is inefficient, the function should have been written so that this doesn't need to be done
+            listofargs.pop()
+            #print(listofargs)
+            
+            
+            #this code is REALLY unreadble and probably very inefficient, this should be rewritten sometime, probably.
+            #also, this should be made into an inner function, as it can be used to check for kind of mode used, at least in EFSim
+            #checking if passedargs are correct
+            
+            for i in listofargs:
+                pausecounter = 0
+                index = -1
+                for n in i:
+                    index += 1
+                    if n != ',':
+                        if n != ' ':
+                            if n == '-':
+                                continue
+                            # if its not a special char, check if it is a number
+                            try:
+                                x = int(n)
+                            except:
+                                print("print help EfSim here")
+                                return
+                        else:
+                            #if first char is pause, return
+                            if index == 0:
+                                print("print help EfSim here")
+                                return
+                            pausecounter += 1
+                if pausecounter != 2:
+                    print("print help EfSim here pauses")
+                    return
+            
+
+            print("Running sim, close the window, or type ")   
+            
+            #this is some messy code, should be fixed
+            ghb = ""
+            amounts = len(listofargs)
+            possarg = ""
+            for i in listofargs:
+                ghb += SplitStringIntoList(i)[0] + " "
+                possarg += SplitStringIntoList(i)[1] + " " + SplitStringIntoList(i)[2] + " "
+
+
+            result = subprocess.run(["python", "ElectricFieldSimulation.py", possarg, "", "", "", ghb, str(amounts)], capture_output=True, text=True)
+            
+            return
+        elif line[:2] == "-a":
+            passedargs = line[2:]
             print("no other args yet quitting")
             return
-        print("Running sim, close the window, or type ")
+        else:
+            print("print help EfSim here")
+            return
+        
         #change the order of the inputs, right now they are NOT inputted the same way as when creating a new class
         #result = subprocess.run(["python", "ElectricFieldSimulation.py", "680 320 100 200", "blue red", "20000000000000 1000000000000", "0 0 1 -1", "1 -2"], capture_output=True, text=True)
         #no need to pass colors here, those will be chosen inside electricfieldsim or the simcore depending on the implementation
         #no need to pass mass here, it's unneded in this sim
-        result = subprocess.run(["python", "ElectricFieldSimulation.py", posarg, "", "", "", qarg, str(amount)], capture_output=True, text=True)
-        print(result.stdout)
-        print(result.stderr)
+        #result = subprocess.run(["python", "ElectricFieldSimulation.py", posarg, "", "", "", qarg, str(amount)], capture_output=True, text=True)
         print("Closing simulation")
 
 if __name__ == '__main__':
