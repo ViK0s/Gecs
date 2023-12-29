@@ -89,7 +89,13 @@ class massObject(circle):
             etemp = (obj.q/(mag**2))*(vctr-vctrobj)
             self.E += etemp
         self.E *= k
-
+    #this method should also check for where the value will be drawn, as it sometimes can be drawn outside the visible area
+    def DrawValue(self, value:int, window):
+        font = pygame.font.Font(None, 24)
+        text = font.render(str(value), True, (10, 10, 10))
+        textpos = text.get_rect(centerx=self.xc, y=self.yc - 20)
+        window.blit(text, textpos)
+        
 
 #position : list of list
 #amount : int
