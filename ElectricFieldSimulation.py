@@ -2,13 +2,18 @@ import SimulationCore as SimC
 import pygame
 import sys
 
-input = sys.argv
+inputvar = sys.argv
 
+#this should be in interface core, only for the interactive mode, but I didn't have time to implement
+print("Input x of test charge")
+tempinputx = input()
+print("Input y of test charge")
+tempinputy = input()
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 running = True
-test_charge = SimC.massObject(500, 500, 5, "black", q = 1)
+test_charge = SimC.massObject(int(tempinputx), int(tempinputy), 5, "black", q = 1)
 
 def drawgroup(objlist):
     for i in objlist:
@@ -25,7 +30,7 @@ def ChangeColor(objlist):
 
 #this is kinda unreadable?
 
-x = SimC.ObjSpawn(SimC.afterConvert(SimC.SplitStringIntoList(input[1])), int(input[6]), 0, 0, SimC.SplitStringIntoList(input[5]), 0)
+x = SimC.ObjSpawn(SimC.afterConvert(SimC.SplitStringIntoList(inputvar[1])), int(inputvar[6]), 0, 0, SimC.SplitStringIntoList(inputvar[5]), 0)
 ChangeColor(x)
 
 while running:

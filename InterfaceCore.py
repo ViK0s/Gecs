@@ -113,8 +113,9 @@ class Gui(cmd.Cmd):
             
             #this is really stupid, but I couldn't bother to rewire this code, what it does is that while passing the args like so [[args],[args]] a third string with nothing
             #inside is created, so we just pop it so that there's no bugs. This is inefficient, the function should have been written so that this doesn't need to be done
-            listofargs.pop()
-            #print(listofargs)
+            if len(listofargs) >= 3:
+                listofargs.pop()
+            print(listofargs)
             
             
             #this code is REALLY unreadble and probably very inefficient, this should be rewritten sometime, probably.
