@@ -83,8 +83,8 @@ class Gui(cmd.Cmd):
 
             print("Running sim, close the window, or type ")
             result = subprocess.run(["python", "ElectricFieldSimulation.py", posarg, "", "", "", qarg, str(amount)], capture_output=True, text=True)
-            print(result.stdout)
-            print(result.stderr)
+            #print(result.stdout)
+            #print(result.stderr)
         
         #non interactive mode
         elif line[:11] == "--arguments": 
@@ -158,9 +158,11 @@ class Gui(cmd.Cmd):
                 ghb += SplitStringIntoList(i)[0] + " "
                 possarg += SplitStringIntoList(i)[1] + " " + SplitStringIntoList(i)[2] + " "
 
-
-            result = subprocess.run(["python", "ElectricFieldSimulation.py", possarg, "", "", "", ghb, str(amounts)], capture_output=True, text=True)
+            #temp code to implement the input of x and y of the test charge, this code should be used in interactive mode, not "argument" mode
+            xtest = input("Input x pos of test charge ")
+            ytest = input("Input y pos of test charge ")
             
+            result = subprocess.run(["python", "ElectricFieldSimulation.py", possarg, "", "", "", ghb, str(amounts),(xtest + " " + ytest) ], capture_output=True, text=True)
             return
         elif line[:2] == "-a":
             passedargs = line[2:]

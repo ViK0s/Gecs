@@ -4,16 +4,12 @@ import sys
 
 inputvar = sys.argv
 
-#this should be in interface core, only for the interactive mode, but I didn't have time to implement
-print("Input x of test charge")
-tempinputx = input()
-print("Input y of test charge")
-tempinputy = input()
 
 pygame.init()
 screen = pygame.display.set_mode((1280, 720))
 running = True
-test_charge = SimC.massObject(int(tempinputx), int(tempinputy), 5, "black", q = 1)
+posoftest = SimC.SplitStringIntoList(inputvar[7])
+test_charge = SimC.massObject(int(posoftest[0]), int(posoftest[1]), 5, "black", q = 1)
 
 def drawgroup(objlist):
     for i in objlist:
