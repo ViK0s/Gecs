@@ -1,6 +1,6 @@
-# SimPYlPointSim
+# Gecs
 
-SimPYlPointSim (name subject to change) is a simple simulation program handling simulation of orbits, Nbody type simulations and even a simulation of electric fields. 
+Gecs (Gravity and electromagnetic cli sim) is a simple simulation program handling simulation of orbits, Nbody type simulations and even a simulation of electric fields. 
 
 ## Description
 
