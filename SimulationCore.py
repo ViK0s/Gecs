@@ -77,6 +77,7 @@ class massObject(circle):
         #draw vector
         pygame.draw.line(window,"green",[self.xc, self.yc],scaledVectorEnd,2)
         rotation = math.degrees(math.atan2([self.xc, self.yc][1]-scaledVectorEnd[1], scaledVectorEnd[0]-[self.xc, self.yc][0]))+90
+        #first point is the point that is parallel to the line (or on it), second is the one to the right when the triangle is facing north
         pygame.draw.polygon(window, "green", ((scaledVectorEnd[0]+5*math.sin(math.radians(rotation)), scaledVectorEnd[1]+5*math.cos(math.radians(rotation))), (scaledVectorEnd[0]+5*math.sin(math.radians(rotation-120)), scaledVectorEnd[1]+5*math.cos(math.radians(rotation-120))), (scaledVectorEnd[0]+5*math.sin(math.radians(rotation+120)), scaledVectorEnd[1]+5*math.cos(math.radians(rotation+120)))))
     def SimElectricField(self, objlist):
         self.E = 0
